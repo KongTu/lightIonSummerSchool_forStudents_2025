@@ -22,6 +22,12 @@ Pre-requisite:
 ### Download the pseudo data from google drive:
 https://drive.google.com/file/d/1ofgtVJOQZuD-fsEqRfIrLZhoGxKIj9dp/view?usp=sharing
 
+### Running the macros (in order):
+
+``` root -l analyze.C+```
+
+``` root -l getImage.C```
+
 ### Understanding the tree
 
 #### mcp 
