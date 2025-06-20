@@ -9,7 +9,7 @@ Goal of this task:
 - reconstruct the t distribution and perform imagining. 
 - the final questions are: 
 	what ion are we looking at? 
-	how big it is?
+	what is the radius?
   (the answers have to be based on reconstructed "pseudo-data")
 
 Hint:
