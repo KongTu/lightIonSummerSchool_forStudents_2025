@@ -25,29 +25,29 @@ https://drive.google.com/file/d/1ofgtVJOQZuD-fsEqRfIrLZhoGxKIj9dp/view?usp=shari
 ### Understanding the tree
 
 #### mcp 
-MC particles that have the information of px, py, pz, mass, and status. Stable particles in the final-state have a status = 1.
+* MC particles that have the information of px, py, pz, mass, and status. Stable particles in the final-state have a status = 1.
 
 #### particles
-Reconstructed charged particles in main detector and B0.
+* Reconstructed charged particles in main detector and B0.
 
 #### clusters_eemc
-Reconstructed cluster in backward EM calorimeter
+* Reconstructed cluster in backward EM calorimeter
 
 #### clusters_zdc
-Reconstructed cluster in zdc
+* Reconstructed cluster in zdc
 
 #### hit_rp
-reconstructed hits at RP but no tracking has been done.
+* reconstructed hits at RP but no tracking has been done.
 
 #### hit_omd
-reconstructed hits at omd but no tracking has been done.
+* reconstructed hits at omd but no tracking has been done.
 
 ### Understanding the example macros (with basic structures)
 
 #### analyze.C 
-Use this to process all data and save histograms
+* Use this to process all data (loop over events, particles, etc.) and save histograms (results)
 
 #### getImage.C
-use this to perform Fourier Transformation from "t" to "b"
+* use this to perform Fourier Transformation from "t" to "b"
 
 
