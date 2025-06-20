@@ -16,6 +16,7 @@ Pre-requisite:
 ### Get the repo:
 
 ```git clone https://github.com/KongTu/lightIonSummerSchool_forStudents_2025.git```
+
 ```cd lightIonSummerSchool_forStudents_2025```
 
 ### Download the pseudo data from google drive:
