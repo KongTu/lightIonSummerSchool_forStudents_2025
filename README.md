@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This course is an interactive session to learn about how to perform a simple EIC data analysis. The complicated part that associated with the ePIC experiment has been taken care of, where the pseudo data file has been processed into flat root tree format. 
+This course is an interactive session to learn about how to perform a simple EIC data analysis. The complicated part that associated with the ePIC experiment has been taken care of, where the pseudo data file has been processed into a light weight flat root tree. 
 
 The pseudo data is based on Sartre coherent VM simulation and BeAGLE incoherent VM simulation. The beam momentum is 18 x 137.5 GeV with electron scattering off an ion. 
 
