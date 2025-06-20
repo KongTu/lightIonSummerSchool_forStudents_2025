@@ -1,5 +1,7 @@
-
 /*
+To start, download the pseudo-data:
+https://drive.google.com/file/d/1ofgtVJOQZuD-fsEqRfIrLZhoGxKIj9dp/view?usp=sharing
+
 Goal of this task:
 
 - process all the data that has a mixture of coherent and incoherent VM production. 
