@@ -34,7 +34,7 @@ void getImage()
       2.  hbarc is your good friend for converting to dimensionless quantity. 
           what is the unit of hbarc?  
       3. Finding the charge radius of the ion can be approached differently. 
-          For this exercise, let's use the `Full Width at Half Maximum` as a way to 
+          For this exercise, let's use the `Width at Half Maximum` as a way to 
           obtain the R value of the ion. 
 
     */
