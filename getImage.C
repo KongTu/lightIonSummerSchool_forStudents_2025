@@ -102,9 +102,28 @@ void getImage()
 
 
     // define a canvas and then draw..(just in case you don't know ROOT;-))
+    TCanvas* c1 = new TCanvas("c1","c1",600,600);
+    gPad->SetTicks();
+    gPad->SetLeftMargin(0.15);
+    gPad->SetBottomMargin(0.15);
+    gPad->SetRightMargin(0.01);
+    gPad->SetLogx(0);
+
+    TH1D* base1 = makeHist("base1", "", "b [fm]", "F(b)/#scale[0.6]{#int} F(b) db", 100,-8,8,kBlack);
+    base1->GetYaxis()->SetRangeUser(0, 0.17);
+    base1->GetXaxis()->SetTitleColor(kBlack);
     
-    // hF_b_MC->Draw("same");
-    // hF_b_REC->Draw("Psame");
+    fixedFontHist1D(base1,1.07,1.3);
+    base1->GetYaxis()->SetTitleSize(base1->GetYaxis()->GetTitleSize()*1.4);
+    base1->GetXaxis()->SetTitleSize(base1->GetXaxis()->GetTitleSize()*1.4);
+    base1->GetYaxis()->SetLabelSize(base1->GetYaxis()->GetLabelSize()*1.5);
+    base1->GetXaxis()->SetLabelSize(base1->GetXaxis()->GetLabelSize()*1.5);
+    base1->GetXaxis()->SetNdivisions(4,6,0);
+    base1->GetYaxis()->SetNdivisions(4,6,0);
+    base1->Draw("");
+    
+    hF_b_MC->Draw("same");
+    hF_b_REC->Draw("Psame");
 
     TLegend *leg = new TLegend(0.7, 0.75, 0.9, 0.85); // (x1, y1, x2, y2)
     leg->AddEntry(hF_b_MC, "MC t_{max} = 0.25", "P"); // change to your t_max for integration.
