@@ -132,7 +132,7 @@ void getImage()
     leg->SetFillStyle(0);       // Transparent background
     leg->SetTextFont(42);       // Nice readable font
     leg->SetTextSize(0.03);     // Optional: adjust size
-    // leg->Draw("same");
+    leg->Draw("same");
 
     cout << "True ion size = " <<  " [your answer] fm " << endl;
     cout << "Reco ion size = " <<  " [your answer] fm " << endl;
