@@ -12,10 +12,11 @@ Goal of this task:
 	what is the radius?
   (the answers have to be based on reconstructed "pseudo-data")
 
-Hint:
--1 the MC particles are provided. Make use of that.
+Remarks:
+-1 the MC particles are provided. Make use of that. The events that are generated 
+	are Q2>1 GeV2
 
--2 particles have all charged particles in the main detector and B0;
+-2 "particles" branch has all charged particles in the main detector and B0;
    EEMC cluster is backward EMCal for scattered electron
    RP, OMD, ZDC are three far forward detectors with hit or cluster information.
 
@@ -72,17 +73,26 @@ void analyze(){
 			TLorentzVector Kaon(0,0,0,0);
 			vector<TLorentzVector> kdaug;
 
+		bool incoherent_MC=false; // if particles are found in forward detectors, use "incoherent_MC" to veto. 
+
 		for(int i=0;i<event->mcp.size();i++){
 			const MCp& p = event->mcp[i];
 			int status=p.status;
 			float mass=p.mass;
+				//the tree for mc particles has px,py,pz,mass, and status.
+			if(status != 1) continue; // status == 1 means stable final-state particles.
 			
 			//do your MC analysis here.//
-			// find the scattered electron and the two kaon daughters
-			// check the invariant mass, and calculate t.
+				// find the scattered electron and the two kaon daughters
+				// check the invariant mass, and calculate t.
+			// hint:
+				// in exclusive reactions, only e', K+ and K- are in the main detector. 
+				// the rest are the breakup product from ions, mostly in the forward detectors.
+				
 		}
 
-	   	/*phase space*/	
+
+   	/*phase space*/	
 		TLorentzVector qbeam=eIn-escat;
 		double Q2=-(qbeam).Mag2();  
 		double pq=aIn.Dot(qbeam);
@@ -95,33 +105,57 @@ void analyze(){
 		h_Q2_e->Fill(Q2);
 		/*end phase space*/
 
-		//try to get t_MC by using the MC e' and VM. with 
-		// a chosen t reconstructed method.
+			//try to get t_MC by using the MC e' and VM. with 
+			// a chosen t reconstructed method. provided in the analyze.h
 
 		double t_MC=999.;
-		h_tMC->Fill(t_MC);
+			if(!incoherent_MC) h_tMC->Fill(t_MC); //only save coherent.
 
 
 
 		/********separation of MC (above) and REC (below) analysis*********/
 
+		bool incoherent_REC = false;
+		//define the condition for incoherent at the REC level.
+			//hint: use forward detector information
+
+						// example macro for accessing FF detectors.
+
+						// //reconstructed ZDC loop
+						// for(int i=0;i<event->clusters_zdc.size();i++){
+						// 	const Cluster_ZDC& clus = event->clusters_zdc[i];
+						// }
+
+						// //reconstructed RP hit loop
+						// for(int i=0;i<event->hit_rp.size();i++){
+						// 	const Hit_RP& hit = event->hit_rp[i];
+						// }
+
+						// //reconstructed OMD hit loop
+						// for(int i=0;i<event->hit_omd.size();i++){
+						// 	const Hit_OMD& hit = event->hit_omd[i];
+						// }
+
+		if(incoherent_REC) continue;
 
 		//reco events:
 		TLorentzVector escat_REC(0,0,0,0);
 		TLorentzVector K1_REC(0,0,0,0);
 		TLorentzVector K2_REC(0,0,0,0);
 
-		//reconstructed EEMC loop (why do you need this? look at Hint #4)
+		//reconstructed EEMC loop (why do you need this? look at Remark #4)
 		for(int i=0;i<event->clusters_eemc.size();i++){
 			const Cluster_EEMC& clus = event->clusters_eemc[i];
 		
-			//find the leading energy cluster
-
+			//hint: find the leading energy cluster for scattered electron's energy
+				//   how do we know its an electron? the technique we usually use (without a PID detector) is called E/p
+				//   where the energy divide by momentum should be peaked at 1 due to the small mass of electron. 
+				//   momentum p comes from tracking
 		}
 
 		double maxpz=0.;
 		TLorentzVector elec_trk(0,0,0,0); //this is track only scattered electron for E/p later.
-		TLorentzVector hfs_e(0,0,0,0); // this has all four vectors
+		TLorentzVector hfs_e(0,0,0,0); // this has all charged particles's four vectors
 		TLorentzVector part(0,0,0,0);
 
 		//reconstructed charged particle loop
@@ -153,12 +187,15 @@ void analyze(){
 		}
 
 		//selections
-		//do forget removing incoherent.
+		//don't forget removing incoherent.
 
 		//E over p
 		double EoverP=escat_REC.E()/elec_trk.P();
 
 		//E - pz (use the better scat elec four vector)
+		// this is another trick to help select the DIS scattered electron 
+		// one should work out the math, where E-pz should peak at 2xE(incoming electron), 
+		// which is 18x2 = 36 GeV.
 		double EpzREC= (hfs_e-elec_trk+escat_REC).E() - (hfs_e-elec_trk+escat_REC).Pz();
 
 		TLorentzVector qbeamREC=eIn-escat_REC;
@@ -183,24 +220,6 @@ void analyze(){
 		// {
 			double t_L=999.;// one can use method L or any other method. method L is in analyze.h.
 			h_tREC->Fill(t_L);
-		// }
-
-
-		// example macro for accessing FF detectors.
-
-		// //reconstructed ZDC loop
-		// for(int i=0;i<event->clusters_zdc.size();i++){
-		// 	const Cluster_ZDC& clus = event->clusters_zdc[i];
-		// }
-
-		// //reconstructed RP hit loop
-		// for(int i=0;i<event->hit_rp.size();i++){
-		// 	const Hit_RP& hit = event->hit_rp[i];
-		// }
-
-		// //reconstructed OMD hit loop
-		// for(int i=0;i<event->hit_omd.size();i++){
-		// 	const Hit_OMD& hit = event->hit_omd[i];
 		// }
 
 	}

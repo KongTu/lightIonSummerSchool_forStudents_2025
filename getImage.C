@@ -30,7 +30,7 @@ void getImage()
     
     Hints:
       1.  \delta^2 = -t, the measured cross section is in t, but integration is in \delta,
-        we need to do change of variable.
+        we need to do a change of variable.
       2.  hbarc is your good friend for converting to dimensionless quantity. 
           what is the unit of hbarc?  
       3. Finding the charge radius of the ion can be approached differently. 
@@ -49,13 +49,16 @@ void getImage()
             tBinWidth = hdsigmadt_MC->GetBinWidth(i);
             t = hdsigmadt_MC->GetBinCenter(i); // GeV2
             delta =  sqrt(fabs(t)); // GeV
+                //hint: 2\delta d\delta = dt
             
             dsigmadt_MC = hdsigmadt_MC->GetBinContent(i);  //nb/GeV^2
             dsigmadt_REC = hdsigmadt_REC->GetBinContent(i);  //nb/GeV^2
             
             dsigmadt_MC/=1e7; //convert to fm^2/GeV2
             dsigmadt_REC/=1e7; //convert to fm^2/GeV2
-            
+           
+            //hint: your task is to figure out what the below 2 (3) quantities are. 
+                // see later result1 and result2 what you need.
             double bessel=999.;//TMath::BesselJ0(); remember the quantity is dimensionless
             double amp_MC = 999.;//
             double amp_REC = 999.; //
@@ -74,9 +77,9 @@ void getImage()
                 amp_REC*=-1;
             }
 
-            result1 =  999.; //999 is a placeholder, you need to figure it out here!
-            result2 =  999.; //999 is a placeholder, you need to figure it out here!
-            
+            result1 =  amp_MC * bessel * tBinWidth/2 ;
+            result2 =  amp_REC * bessel * tBinWidth/2 ;
+
             //perform the sum         
             F_b_MC += result1;
             F_b_REC += result2;
@@ -97,6 +100,9 @@ void getImage()
     hF_b_MC->Scale(1.0 / hF_b_MC->Integral("width"));
     hF_b_REC->Scale(1.0 / hF_b_REC->Integral("width"));
 
+
+    // define a canvas and then draw..(just in case you don't know ROOT;-))
+    
     // hF_b_MC->Draw("same");
     // hF_b_REC->Draw("Psame");
 
@@ -107,7 +113,7 @@ void getImage()
     leg->SetFillStyle(0);       // Transparent background
     leg->SetTextFont(42);       // Nice readable font
     leg->SetTextSize(0.03);     // Optional: adjust size
-    leg->Draw("same");
+    // leg->Draw("same");
 
     cout << "True ion size = " <<  " [your answer] fm " << endl;
     cout << "Reco ion size = " <<  " [your answer] fm " << endl;
