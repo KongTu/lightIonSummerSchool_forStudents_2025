@@ -61,10 +61,11 @@ void analyze(){
 	TH1D* h_tMC = new TH1D("h_tMC",";t_{MC} (GeV^{2})",100,0,0.3);
 	TH1D* h_tREC = new TH1D("h_tREC",";t_{REC} (GeV^{2})",100,0,0.3);
 
+	cout << "Question: What ion are we running? " << endl;
 	//event loop
 	for(int ievt=0;ievt<nEvents;ievt++){
 		tree->GetEntry(ievt);
-		
+		if( ievt%100000 == 0 )cout << "Events ~ " << ievt << endl;
 		// don't forget to remove incoherent in the MC, if you want to look at MC.
 
 		//mc particle loop
@@ -223,6 +224,8 @@ void analyze(){
 		// }
 
 	}
+
+	cout << "All events processed. " << endl;
 
 	output->Write();
 	output->Close();
